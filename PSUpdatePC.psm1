@@ -10,7 +10,14 @@ Function Get-UpdatePC(
 
 
    Write-Host $ModuleInstallation -ForegroundColor Yellow
-   New-Item -Name Modules -Path $env:USERPROFILE\Documents\WindowsPowerShell\ -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
+   
+   $path = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules"
+   
+   IF (!(Test-Path $path))
+   {
+     New-Item -Name Modules -Path $env:USERPROFILE\Documents\WindowsPowerShell\ -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
+   }
+   
    Save-Module -Name PSWindowsUpdate -RequiredVersion 1.5.2.2 -Path $env:USERPROFILE\Documents\WindowsPowerShell\Modules
    Import-Module -Name PSWindowsUpdate -Force
    Write-Host $CheckInstallerStatus -ForegroundColor Yellow
